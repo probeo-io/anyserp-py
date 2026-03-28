@@ -205,10 +205,14 @@ if results.get("aiOverview"):
         print(f"  [{ref['index']}] {ref['title']} - {ref['url']}")
 ```
 
-## Also Available
+## See Also
 
-- **Node.js**: [`@probeo/anyserp`](https://github.com/probeo-io/anyserp) on npm
-- **Go**: [`anyserp-go`](https://github.com/probeo-io/anyserp-go)
+| Package | Description |
+|---|---|
+| [@probeo/anyserp](https://github.com/probeo-io/anyserp) | TypeScript version of this package |
+| [anyserp-go](https://github.com/probeo-io/anyserp-go) | Go version of this package |
+| [anymodel-py](https://github.com/probeo-io/anymodel-py) | Unified LLM router for Python |
+| [workflow-py](https://github.com/probeo-io/workflow-py) | Stage-based pipeline engine for Python |
 
 ## License
 
