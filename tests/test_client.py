@@ -250,7 +250,7 @@ class TestProviderPrefixRouting:
         client = AnySerp({"serper": {"apiKey": "test"}})
         client._registry._adapters["serper"] = mock_adapter
 
-        result = await client.search("serper/hello world")
+        await client.search("serper/hello world")
         call_args = mock_adapter.search.call_args[0][0]
         assert call_args["query"] == "hello world"
 

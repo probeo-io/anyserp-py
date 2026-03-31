@@ -148,7 +148,7 @@ class TestSerperAdapter:
                 "link": "https://python.org",
             },
         }
-        with _make_post_ctx("_serper", _mock_response(mock_data)) as client:
+        with _make_post_ctx("_serper", _mock_response(mock_data)):
             result = await adapter.search({"query": "python"})
 
         assert result["provider"] == "serper"
