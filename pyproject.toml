@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "anyserp-py"
-version = "0.1.0"
+version = "0.1.1"
 description = "Unified SERP API router supporting 11 providers"
 readme = "README.md"
 license = "MIT"
