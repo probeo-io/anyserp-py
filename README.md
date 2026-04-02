@@ -1,6 +1,16 @@
 # anyserp
 
+[![PyPI version](https://img.shields.io/pypi/v/anyserp-py)](https://pypi.org/project/anyserp-py/)
+[![PyPI downloads](https://img.shields.io/pypi/dm/anyserp-py)](https://pypi.org/project/anyserp-py/)
+[![License](https://img.shields.io/pypi/l/anyserp-py)](https://pypi.org/project/anyserp-py/)
+[![Python versions](https://img.shields.io/pypi/pyversions/anyserp-py)](https://pypi.org/project/anyserp-py/)
+[![CI](https://github.com/probeo-io/anyserp-py/actions/workflows/ci.yml/badge.svg)](https://github.com/probeo-io/anyserp-py/actions/workflows/ci.yml)
+
 Unified SERP API router for Python. Route search requests across Google, Bing, Brave, and more with a single API. Self-hosted, zero fees.
+
+## Why anyserp?
+
+One SDK, 11 SERP providers. Switch providers without changing code. Every provider returns the same unified response format, so your application logic stays consistent regardless of which provider you use. Self-hosted with your own API keys and zero routing fees. Built-in fallback routing means if one provider fails, the next is tried automatically. Zero heavy dependencies. Just httpx.
 
 ## Install
 
@@ -213,6 +223,10 @@ if results.get("aiOverview"):
 | [anyserp-go](https://github.com/probeo-io/anyserp-go) | Go version of this package |
 | [anymodel-py](https://github.com/probeo-io/anymodel-py) | Unified LLM router for Python |
 | [workflow-py](https://github.com/probeo-io/workflow-py) | Stage-based pipeline engine for Python |
+
+## Support
+
+If anyserp is useful to you, consider giving it a star. It helps others discover the project.
 
 ## License
 
