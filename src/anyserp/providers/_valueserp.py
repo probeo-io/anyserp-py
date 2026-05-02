@@ -8,6 +8,8 @@ from .._errors import AnySerpError
 
 VALUESERP_BASE = "https://api.valueserp.com/search"
 
+SUPPORTED_TYPES = frozenset(["web", "images", "news", "videos"])
+
 SEARCH_TYPE_MAP: dict[str, str] = {
     "web": "web",
     "images": "images",
@@ -32,7 +34,7 @@ class _ValueSerpAdapter:
         return "valueserp"
 
     def supports_type(self, search_type: str) -> bool:
-        return True
+        return search_type in SUPPORTED_TYPES
 
     async def _make_request(self, params: dict[str, str]) -> Any:
         params["api_key"] = self._api_key

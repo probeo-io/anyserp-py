@@ -9,6 +9,8 @@ from .._errors import AnySerpError
 
 BRIGHTDATA_API_BASE = "https://api.brightdata.com/request"
 
+SUPPORTED_TYPES = frozenset(["web", "images", "news", "videos"])
+
 TBM_MAP: dict[str, str | None] = {
     "web": None,
     "images": "isch",
@@ -26,7 +28,7 @@ class _BrightDataAdapter:
         return "brightdata"
 
     def supports_type(self, search_type: str) -> bool:
-        return True
+        return search_type in SUPPORTED_TYPES
 
     async def _make_request(self, search_url: str) -> Any:
         async with httpx.AsyncClient() as client:

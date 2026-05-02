@@ -8,6 +8,8 @@ from .._errors import AnySerpError
 
 SCRAPINGDOG_BASE = "https://api.scrapingdog.com"
 
+SUPPORTED_TYPES = frozenset(["web", "images", "news"])
+
 ENDPOINT_MAP: dict[str, str] = {
     "web": "/google",
     "images": "/google_images",
@@ -25,7 +27,7 @@ class _ScrapingDogAdapter:
         return "scrapingdog"
 
     def supports_type(self, search_type: str) -> bool:
-        return search_type in ("web", "images", "news")
+        return search_type in SUPPORTED_TYPES
 
     async def _make_request(self, endpoint: str, params: dict[str, str]) -> Any:
         params["api_key"] = self._api_key

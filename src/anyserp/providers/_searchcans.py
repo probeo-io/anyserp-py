@@ -8,6 +8,8 @@ from .._errors import AnySerpError
 
 SEARCHCANS_API_BASE = "https://www.searchcans.com/api/search"
 
+SUPPORTED_TYPES = frozenset(["web", "news"])
+
 
 class _SearchCansAdapter:
     def __init__(self, api_key: str) -> None:
@@ -18,7 +20,7 @@ class _SearchCansAdapter:
         return "searchcans"
 
     def supports_type(self, search_type: str) -> bool:
-        return search_type in ("web", "news")
+        return search_type in SUPPORTED_TYPES
 
     async def _make_request(self, body: dict[str, Any]) -> Any:
         async with httpx.AsyncClient() as client:

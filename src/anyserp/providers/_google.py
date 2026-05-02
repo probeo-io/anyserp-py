@@ -8,6 +8,8 @@ from .._errors import AnySerpError
 
 GOOGLE_CSE_BASE = "https://www.googleapis.com/customsearch/v1"
 
+SUPPORTED_TYPES = frozenset(["web", "images"])
+
 TYPE_MAP: dict[str, str | None] = {
     "web": None,
     "images": "image",
@@ -33,7 +35,7 @@ class _GoogleAdapter:
         return "google"
 
     def supports_type(self, search_type: str) -> bool:
-        return search_type in ("web", "images")
+        return search_type in SUPPORTED_TYPES
 
     async def _make_request(self, params: dict[str, str]) -> Any:
         params["key"] = self._api_key

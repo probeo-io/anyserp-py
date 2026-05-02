@@ -8,11 +8,14 @@ from .._errors import AnySerpError
 
 SERPER_API_BASE = "https://google.serper.dev"
 
+SUPPORTED_TYPES = frozenset(["web", "images", "news", "videos", "places"])
+
 TYPE_ENDPOINTS: dict[str, str] = {
     "web": "/search",
     "images": "/images",
     "news": "/news",
     "videos": "/videos",
+    "places": "/places",
 }
 
 DATE_MAP: dict[str, str] = {
@@ -32,7 +35,7 @@ class _SerperAdapter:
         return "serper"
 
     def supports_type(self, search_type: str) -> bool:
-        return True
+        return search_type in SUPPORTED_TYPES
 
     async def _make_request(self, endpoint: str, body: dict[str, Any]) -> Any:
         async with httpx.AsyncClient() as client:
@@ -120,6 +123,29 @@ class _SerperAdapter:
                     **({"thumbnail": r["imageUrl"]} if r.get("imageUrl") else {}),
                     **({"datePublished": r["date"]} if r.get("date") else {}),
                 })
+        elif search_type == "places":
+            for i, r in enumerate(data.get("places", [])):
+                result: dict[str, Any] = {
+                    "position": i + 1,
+                    "title": r.get("title", ""),
+                    "url": r.get("website", ""),
+                    "description": r.get("address", ""),
+                }
+                if r.get("address"):
+                    result["address"] = r["address"]
+                if r.get("phoneNumber"):
+                    result["phone"] = r["phoneNumber"]
+                if r.get("rating") is not None:
+                    result["rating"] = r["rating"]
+                if r.get("ratingCount") is not None:
+                    result["reviewCount"] = r["ratingCount"]
+                if r.get("type"):
+                    result["placeType"] = r["type"]
+                if r.get("hours"):
+                    result["hours"] = r["hours"]
+                if r.get("imageUrl"):
+                    result["thumbnail"] = r["imageUrl"]
+                results.append(result)
 
         response: dict[str, Any] = {
             "provider": "serper",

@@ -5,7 +5,7 @@ from typing import Any, Literal, Protocol, TypedDict
 
 # ── Scalars ───────────────────────────────────────────────────────────────────
 
-SearchType = Literal["web", "images", "news", "videos"]
+SearchType = Literal["web", "images", "news", "videos", "places"]
 DateRange = Literal["day", "week", "month", "year"]
 
 
@@ -39,6 +39,13 @@ class SearchResult(TypedDict, total=False):
     source: str
     duration: str
     channel: str
+    address: str
+    phone: str
+    rating: float
+    reviewCount: int
+    placeType: str
+    hours: str
+    coordinates: dict[str, float]
 
 
 class PeopleAlsoAsk(TypedDict, total=False):

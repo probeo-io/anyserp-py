@@ -8,11 +8,14 @@ from .._errors import AnySerpError
 
 SERPAPI_BASE = "https://serpapi.com/search.json"
 
+SUPPORTED_TYPES = frozenset(["web", "images", "news", "videos", "places"])
+
 ENGINE_MAP: dict[str, str] = {
     "web": "google",
     "images": "google_images",
     "news": "google_news",
     "videos": "google_videos",
+    "places": "google_places",
 }
 
 DATE_MAP: dict[str, str] = {
@@ -32,7 +35,7 @@ class _SerpApiAdapter:
         return "serpapi"
 
     def supports_type(self, search_type: str) -> bool:
-        return True
+        return search_type in SUPPORTED_TYPES
 
     async def _make_request(self, params: dict[str, str]) -> Any:
         params["api_key"] = self._api_key
@@ -132,6 +135,32 @@ class _SerpApiAdapter:
                     **({"thumbnail": thumbnail} if thumbnail else {}),
                     **({"datePublished": r["date"]} if r.get("date") else {}),
                 })
+        elif search_type == "places":
+            for i, r in enumerate(data.get("local_results", [])):
+                result: dict[str, Any] = {
+                    "position": r.get("position", i + 1),
+                    "title": r.get("title", ""),
+                    "url": r.get("website", ""),
+                    "description": r.get("address", ""),
+                }
+                if r.get("address"):
+                    result["address"] = r["address"]
+                if r.get("phone"):
+                    result["phone"] = r["phone"]
+                if r.get("rating") is not None:
+                    result["rating"] = r["rating"]
+                if r.get("reviews") is not None:
+                    result["reviewCount"] = r["reviews"]
+                if r.get("type"):
+                    result["placeType"] = r["type"]
+                if r.get("hours"):
+                    result["hours"] = r["hours"]
+                if r.get("thumbnail"):
+                    result["thumbnail"] = r["thumbnail"]
+                gps = r.get("gps_coordinates")
+                if isinstance(gps, dict):
+                    result["coordinates"] = {"lat": gps["latitude"], "lng": gps["longitude"]}
+                results.append(result)
 
         response: dict[str, Any] = {
             "provider": "serpapi",

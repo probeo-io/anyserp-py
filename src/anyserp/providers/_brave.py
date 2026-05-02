@@ -8,6 +8,8 @@ from .._errors import AnySerpError
 
 BRAVE_API_BASE = "https://api.search.brave.com/res/v1"
 
+SUPPORTED_TYPES = frozenset(["web", "images", "news", "videos"])
+
 TYPE_ENDPOINTS: dict[str, str] = {
     "web": "/web/search",
     "images": "/images/search",
@@ -32,7 +34,7 @@ class _BraveAdapter:
         return "brave"
 
     def supports_type(self, search_type: str) -> bool:
-        return True
+        return search_type in SUPPORTED_TYPES
 
     async def _make_request(self, endpoint: str, params: dict[str, str]) -> Any:
         async with httpx.AsyncClient() as client:

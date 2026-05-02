@@ -9,6 +9,8 @@ from .._errors import AnySerpError
 
 BING_API_BASE = "https://api.bing.microsoft.com/v7.0"
 
+SUPPORTED_TYPES = frozenset(["web", "images", "news", "videos"])
+
 TYPE_ENDPOINTS: dict[str, str] = {
     "web": "/search",
     "images": "/images/search",
@@ -32,7 +34,7 @@ class _BingAdapter:
         return "bing"
 
     def supports_type(self, search_type: str) -> bool:
-        return True
+        return search_type in SUPPORTED_TYPES
 
     async def _make_request(self, endpoint: str, params: dict[str, str]) -> Any:
         async with httpx.AsyncClient() as client:

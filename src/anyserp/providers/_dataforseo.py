@@ -9,6 +9,8 @@ from .._errors import AnySerpError
 
 DATAFORSEO_API_BASE = "https://api.dataforseo.com/v3"
 
+SUPPORTED_TYPES = frozenset(["web", "news"])
+
 COUNTRY_LOCATION_MAP: dict[str, int] = {
     "us": 2840, "gb": 2826, "ca": 2124, "au": 2036, "de": 2276, "fr": 2250,
     "es": 2724, "it": 2380, "br": 2076, "in": 2356, "jp": 2392, "kr": 2410,
@@ -38,7 +40,7 @@ class _DataForSeoAdapter:
         return "dataforseo"
 
     def supports_type(self, search_type: str) -> bool:
-        return search_type in ("web", "news")
+        return search_type in SUPPORTED_TYPES
 
     async def _make_request(self, path: str, tasks: list[dict[str, Any]]) -> Any:
         async with httpx.AsyncClient() as client:
