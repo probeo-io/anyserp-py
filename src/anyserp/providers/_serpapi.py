@@ -160,6 +160,8 @@ class _SerpApiAdapter:
                 gps = r.get("gps_coordinates")
                 if isinstance(gps, dict):
                     result["coordinates"] = {"lat": gps["latitude"], "lng": gps["longitude"]}
+                if r.get("kgmid"):
+                    result["kgmid"] = r["kgmid"]
                 results.append(result)
 
         response: dict[str, Any] = {

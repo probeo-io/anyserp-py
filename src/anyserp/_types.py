@@ -46,6 +46,7 @@ class SearchResult(TypedDict, total=False):
     placeType: str
     hours: str
     coordinates: dict[str, float]
+    kgmid: str
 
 
 class PeopleAlsoAsk(TypedDict, total=False):
