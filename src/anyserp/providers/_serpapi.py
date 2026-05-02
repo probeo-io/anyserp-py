@@ -15,7 +15,7 @@ ENGINE_MAP: dict[str, str] = {
     "images": "google_images",
     "news": "google_news",
     "videos": "google_videos",
-    "places": "google_places",
+    "places": "google_local",
 }
 
 DATE_MAP: dict[str, str] = {
